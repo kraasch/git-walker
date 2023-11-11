@@ -4,18 +4,19 @@
 #> type: TODO: write down.
 #> comment: TODO: write down.
 
-HUB_DIR=$HOME/myroot/projdir/
 GIT_STP=/tmp/git_steps
 
-function fun_git_start() {
+function main() {
 	rm -f "$GIT_STP"
 	touch "$GIT_STP"
-	find "$HUB_DIR" -type d -name ".git" | while read dir; do
-		status=$(git_check "${dir//\.git/}")
-		if $(test -n "$status"); then
-			echo -e "${dir%.git}" >>/tmp/git_steps
-		fi
-	done
+	while read git_dir; do
+		find "$git_dir" -type d -name ".git" | while read dir; do
+			status=$(git_check "${dir//\.git/}")
+			if $(test -n "$status"); then
+				echo -e "${dir%.git}" >>/tmp/git_steps
+			fi
+		done
+	done <~/.config/gitwalker/targets.txt
 }
 
-fun_git_start
+main

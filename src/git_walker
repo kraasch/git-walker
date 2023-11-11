@@ -1,0 +1,27 @@
+#! /bin/bash
+
+#> synopsis: TODO: write down.
+#> type: TODO: write down.
+#> comment: TODO: write down.
+
+gitwalker_config_dir=~/.config/gitwalker/
+targets_config=~/.config/gitwalker/targets.txt
+
+function main() {
+
+	# create config dirctory and files if they don't exist.
+	if $(test ! -d "$gitwalker_config_dir"); then
+		mkdir "$gitwalker_config_dir"
+	fi
+	if $(test ! -f "$targets_config"); then
+		touch "$targets_config"
+	fi
+
+	# walk over targets.
+	while read target; do
+		cd "$target"
+		git_ls
+	done <"$targets_config"
+}
+
+main "$@"

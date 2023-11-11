@@ -4,14 +4,15 @@
 #> type: TODO: write down.
 #> comment: TODO: write down.
 
-function fun_git_ls() {
+function main() {
 	find "$@" -type d -name ".git" | while read dir; do
 		dir="${dir///\.git/}"
 		status=$(git_check "${dir}")
 		if $(test -n "$status"); then
-			echo -e "${dir}\n${status}"
+			#echo -e "${dir}\n${status}"
+			echo -e "${dir}"
 		fi
 	done
 }
 
-fun_git_ls "$@"
+main "$@"

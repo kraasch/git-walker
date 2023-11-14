@@ -1,6 +1,10 @@
 
 # gitwalker
 
+## ideas
+
+ - Discontinue this project and merge into `watchcat`.
+
 ## to-dos
 
  - [ ] show when changes have not been pushed to the remote repository.

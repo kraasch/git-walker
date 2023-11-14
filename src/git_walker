@@ -18,10 +18,19 @@ function main() {
 	fi
 
 	# walk over targets.
+	NL=$'\n'
+	result=''
 	while read target; do
 		cd "$target"
-		git_ls
+		result_new=$(git_ls)
+		if $(test -n "$result_new"); then
+			result="${result}${result_new}${NL}"
+		fi
 	done <"$targets_config"
+	if $(test -z "$result"); then
+		result='✓'
+	fi
+	echo "$result"
 }
 
 main "$@"

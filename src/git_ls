@@ -5,7 +5,8 @@
 #> comment: TODO: write down.
 
 function main() {
-	find "$@" -type d -name ".git" | while read dir; do
+	find . -type d -name ".git" | while read dir; do
+
 		dir="${dir///\.git/}"
 		status_uncommit=$(git_check_uncommitted "${dir}")
 		status_unpushed=$(git_check_unpushed "${dir}")
@@ -16,7 +17,9 @@ function main() {
 
 		# check uncommited flag.
 		if $(test -n "$status_uncommit"); then
-			has_error=$(($has_error + 1))
+			if [[ $* != *--noc* ]]; then
+				has_error=$(($has_error + 1))
+			fi
 			attributes="${attributes}C"
 		else
 			attributes="${attributes} "
@@ -24,7 +27,9 @@ function main() {
 
 		# check unpushed flag.
 		if $(test -n "$status_unpushed"); then
-			has_error=$(($has_error + 1))
+			if [[ $* != *--nop* ]]; then
+				has_error=$(($has_error + 1))
+			fi
 			attributes="${attributes}P"
 		else
 			attributes="${attributes} "
@@ -32,7 +37,9 @@ function main() {
 
 		# check remote flag.
 		if $(test -z "$status_remote"); then
-			has_error=$(($has_error + 1))
+			if [[ $* != *--nor* ]]; then
+				has_error=$(($has_error + 1))
+			fi
 			attributes="${attributes}R"
 		else
 			attributes="${attributes} "

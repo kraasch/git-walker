@@ -7,7 +7,6 @@
 function main() {
 	cd "$1"
 	git status -s
-
 	git log @{u}.. --oneline
 }
 

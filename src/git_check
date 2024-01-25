@@ -7,7 +7,9 @@
 function main() {
 	cd "$1"
 	git status -s
+	DEFAULT_BRANCH=$(git remote show origin | sed -n '/HEAD branch/s/.*: //p')
 	git log @{u}.. --oneline
 }
 
 main "$@"
+

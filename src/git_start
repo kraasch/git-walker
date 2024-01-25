@@ -11,7 +11,7 @@ function main() {
 	touch "$GIT_STP"
 	while read git_dir; do
 		find "$git_dir" -type d -name ".git" | while read dir; do
-			status=$(git_check "${dir//\.git/}")
+			status=$(git_check_uncommitted "${dir//\.git/}")
 			if $(test -n "$status"); then
 				echo -e "${dir%.git}" >>/tmp/git_steps
 			fi

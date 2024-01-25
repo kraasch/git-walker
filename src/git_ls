@@ -7,10 +7,39 @@
 function main() {
 	find "$@" -type d -name ".git" | while read dir; do
 		dir="${dir///\.git/}"
-		status=$(git_check "${dir}")
-		if $(test -n "$status"); then
-			#echo -e "${dir}\n${status}"
-			echo -e "${dir}"
+		status_uncommit=$(git_check_uncommitted "${dir}")
+		status_unpushed=$(git_check_unpushed "${dir}")
+		status_noremote=$(git_check_noremote "${dir}")
+
+		has_error=0
+		attributes=''
+
+		# check uncommited flag.
+		if $(test -n "$status_uncommit"); then
+			has_error=$(($has_error + 1))
+			attributes="${attributes}C"
+		else
+			attributes="${attributes} "
+		fi
+
+		# check unpushed flag.
+		if $(test -n "$status_unpushed"); then
+			has_error=$(($has_error + 1))
+			attributes="${attributes}P"
+		else
+			attributes="${attributes} "
+		fi
+
+		# check noremote flag.
+		if $(test -z "$status_noremote"); then
+			has_error=$(($has_error + 1))
+			attributes="${attributes}R"
+		else
+			attributes="${attributes} "
+		fi
+
+		if $(test $has_error -ne 0); then
+			echo "${attributes} ${dir}"
 		fi
 	done
 }

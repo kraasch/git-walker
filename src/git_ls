@@ -7,7 +7,7 @@
 function main() {
 	find . -type d -name ".git" | while read dir; do
 
-		dir="$(echo "$dir" | sed 's|/.git/$||')"
+		dir="${dir///\.git/}"
 		status_uncommit=$(git_check_uncommitted "${dir}")
 		status_unpushed=$(git_check_unpushed "${dir}")
 		status_remote=$(git_check_getremote "${dir}")

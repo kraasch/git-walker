@@ -6,7 +6,13 @@
 
 function main() {
 	cd "$1"
-	git log @{u}.. --oneline
+
+	remote_link=$(git_check_getremote "${dir}")
+
+	# check if repo has a remote link, if so print unpushed changes.
+	if $(test -n "$remote_link"); then
+		git log @{u}.. --oneline 2>&1
+	fi
 }
 
 

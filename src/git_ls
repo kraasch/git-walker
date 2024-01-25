@@ -9,7 +9,7 @@ function main() {
 		dir="${dir///\.git/}"
 		status_uncommit=$(git_check_uncommitted "${dir}")
 		status_unpushed=$(git_check_unpushed "${dir}")
-		status_noremote=$(git_check_noremote "${dir}")
+		status_remote=$(git_check_getremote "${dir}")
 
 		has_error=0
 		attributes=''
@@ -30,8 +30,8 @@ function main() {
 			attributes="${attributes} "
 		fi
 
-		# check noremote flag.
-		if $(test -z "$status_noremote"); then
+		# check remote flag.
+		if $(test -z "$status_remote"); then
 			has_error=$(($has_error + 1))
 			attributes="${attributes}R"
 		else

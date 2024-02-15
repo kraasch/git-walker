@@ -26,7 +26,7 @@ function main() {
 		if $(test -n "$result_new"); then
 			result="${result}${result_new}${NL}"
 		fi
-	done <"$targets_config"
+	done <<<$(expand_globs $targets_config)
 	if $(test -z "$result"); then
 		result='✓'
 	fi

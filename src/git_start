@@ -4,6 +4,7 @@
 #> type: TODO: write down.
 #> comment: TODO: write down.
 
+targets_config=~/.config/gitwalker/targets.txt
 GIT_STP=/tmp/git_steps
 
 function main() {
@@ -17,7 +18,7 @@ function main() {
 				echo -e "${dir%.git}" >>/tmp/git_steps
 			fi
 		done
-	done <~/.config/gitwalker/targets.txt
+	done <<<$(expand_globs $targets_config)
 }
 
 main

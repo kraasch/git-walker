@@ -22,7 +22,8 @@ function main() {
 	result=''
 	while read target; do
 		cd "$target"
-		result_new=$(git_ls "$@")
+		short_target=$(echo "$target" | sed "s|$HOME|~|")
+		result_new=$(git_ls "$@" | sed "s|^|$short_target\t|")
 		if $(test -n "$result_new"); then
 			result="${result}${result_new}${NL}"
 		fi

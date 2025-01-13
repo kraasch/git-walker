@@ -1,9 +1,5 @@
 #! /bin/bash
 
-#> synopsis: TODO: write down.
-#> type: TODO: write down.
-#> comment: TODO: write down.
-
 gitwalker_config_dir=~/.config/gitwalker/
 targets_config=~/.config/gitwalker/targets.txt
 
